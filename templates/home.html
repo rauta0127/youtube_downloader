@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block body %}
+<div id="fakeLoader"></div>
+    <div class="home">
+        <h1>Youtube Movie Downloader</h1>
+        <p>You can download youtube movie from URL.</p>
+        <hr>
+        <form action="{{url_for('convert')}}" method="POST">
+            <div>
+                <p>Youtube URL：<input type="text" name="youtubeUrl" style="width: 40%;"  value="{{ url_box_text }}" placeholder="Paste youtube url"/></p>
+                <p>Format：
+                    <select name="format_select">
+                        <option value="mp4">mp4</option>
+                    </select>
+                    (Now, only .mp4 format)
+                </p>
+                {% autoescape False %}
+                    {{ convert_button }}
+                {% endautoescape %}
+            </div>
+        </form>
+        <div class="progress" style="width: 50%; margin: 5px;">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                <span class="progress-bar-label" id='progress-bar-label'>0%</span>
+            </div>
+        </div>
+        <form action="{{url_for('convert')}}" method="POST">
+            {% autoescape False %}
+                {{ convert_stop_html }}
+            {% endautoescape %}
+        </form>
+        <hr>
+        <p>After converting, thumbnail of movie and download link will be shown up.</p>
+        <p>
+            Movie Title: {{ movie_title }}
+        </p>
+        <div style="padding: 5px; margin-bottom: 5px; border: 1px dotted #333333; text-align: center; width: 320px; height: 180px; vertical-align: middle; display: table-cell;" >
+            {% autoescape False %}
+                {{ thumnail_area_html }}
+            {% endautoescape %}
+        </div>
+        <div id="download" style="display:none">
+            {% autoescape False %}
+                {{ download_file_html }}
+            {% endautoescape %}
+        </div>
+        <form action="{{url_for('reset')}}" method="POST">
+            <input id="reset" type="submit" value="Reset" />
+        </form>
+    </div>
+
+{% endblock %}
